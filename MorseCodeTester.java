@@ -77,8 +77,13 @@ public class MorseCodeTester
 
 		// play sound
 		System.out.println("Playing sound...");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		for (int i=0; i<output.length(); i++) {
-
+			System.out.printf("%s\n",output.charAt(i));
 			// sets a random instrument for each letter (with no encryption)
 			if (inputInstrument == 0 && 
 				(output.charAt(i) == '/' || output.charAt(i) == ' '))
