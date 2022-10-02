@@ -13,24 +13,25 @@ public class MorseCode
 	{
 		// get the file and put the contents into an array
 		File file = new File(fileName);
-		Scanner in = new Scanner(file);
-		
-		for(int i = 0; i < morseAlphabet.length; i++) {
-			if(in.hasNextLine()) {
-				morseAlphabet[i] = in.nextLine();
+		Scanner scan = new Scanner(file);
+	
+		for(int i=0; i<morseAlphabet.length; i++) {
+			if(scan.hasNextLine()) {
+				morseAlphabet[i] = scan.nextLine();
 			}
 		}
+		
 		morseAlphabet[36] = " / ";   // word separator
 	}
 	
 	// get some input from user
 	public static void getInput()
 	{
-		System.out.println("Type some text (a-z, 0-9 and spaces): "); // user must use a-z, 0-9, and space only
-		System.out.println();
+		Scanner scan = new Scanner(System.in);
 		
-		Scanner in = new Scanner(System.in);
-		input = in.nextLine().toLowerCase();
+		System.out.println("Type some text (a-z, 0-9 and spaces): "); // user must use a-z, 0-9, and space only
+		input = scan.nextLine().toLowerCase();
+		
 	}
 	
 	// translate the text into Morse code (without encrytion)
@@ -51,7 +52,7 @@ public class MorseCode
 	public static String convertEncrypt()
 	{
 		String output = "";
-		for(int i = 0; i < input.length(); i++) {
+		for(int i=0; i<input.length(); i++) {
 			// shift using Substitution
 			Random rand = new Random();
 			int shift = rand.nextInt(36);

@@ -40,28 +40,34 @@ public class MorseCodeTester
 		MorseCode.getInput();
 		String output = MorseCode.convert();
 
-		// ask for instrument type
-		System.out.println("Insert instrument number (1-128, for help see" 
-			+ "wikipedia.org/wiki/General_MIDI). Type 0 for random instruments" 
-			+ "(this disables the use of cryptography): ");
+		// get input
+		int instrumentType = 1;
+		int encrypt = 0;
+		int inputInstrument = 0;
 		Scanner scan = new Scanner(System.in);
-		int inputInstrument = scan.nextInt();   // convert input to int
-		int instrumentType = 0;
+		try {
+			// ask for instrument type
+			System.out.println("Insert instrument number (1-128, for help see" 
+				+ "wikipedia.org/wiki/General_MIDI). Type 0 for random instruments" 
+				+ "(this disables the use of cryptography): ");
+			inputInstrument = scan.nextInt();   // convert input to int
 
-		// set the default note for all instruments
+			// ask if user wants to use encryption
+			System.out.println("Enable Encryption? (0-No, 1-Yes): ");
+			encrypt = scan.nextInt();
+		} finally {
+			scan.close();
+		}
+
+		// set the default note
 		int note = 60;  
-
-		// ask if user wants to use encryption
-		System.out.println("Enable Encryption? (0-No, 1-Yes): ");
-		Scanner scan2 = new Scanner(System.in);
-		int encrypt = scan2.nextInt();
-		scan2.close();
 
 		// for no encryption, do simple translation
 		if (encrypt == 0) {
 			System.out.println("Morse:");
 			System.out.println(output);
 		}
+
 		// for encrytpion, use simple Substitution method
 		if (encrypt == 1) {
 			String outputEncrypt = MorseCode.convertEncrypt();
@@ -72,6 +78,7 @@ public class MorseCodeTester
 		// play sound
 		System.out.println("Playing sound...");
 		for (int i=0; i<output.length(); i++) {
+
 			// sets a random instrument for each letter (with no encryption)
 			if (inputInstrument == 0 && 
 				(output.charAt(i) == '/' || output.charAt(i) == ' '))
