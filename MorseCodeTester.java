@@ -72,15 +72,18 @@ public class MorseCodeTester
 		// play sound
 		System.out.println("Playing sound...");
 		for (int i=0; i<output.length(); i++) {
-			// set a random instrument for each letter (with no encryption)
+			// sets a random instrument for each letter (with no encryption)
 			if (inputInstrument == 0 && 
 				(output.charAt(i) == '/' || output.charAt(i) == ' '))
 			{
 				Random rand = new Random();
 				instrumentType = rand.nextInt(128) + 1;
 				note = rand.nextInt(128);
+			}
 
-				// pause between letters
+			// pause between letters
+			if ((output.charAt(i) == '/' || output.charAt(i) == ' '))
+			{			
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
