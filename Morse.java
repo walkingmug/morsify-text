@@ -1,78 +1,33 @@
-import javax.sound.midi.*;
 import java.io.FileNotFoundException;
+import javax.sound.midi.*;
 import java.util.Random;
-import java.util.Scanner;
 
-public class MorseCodeTester 
+
+public class Morse 
 {
-	// creates a message for pressing a note
-	protected static MidiMessage createMIDINoteOnMessage(
-		int channel, int note, int velocity)
-	{
-		return createMIDINoteMessage(
-			ShortMessage.NOTE_ON,channel,note,velocity);
-	}
-	// creates a message for releasing a note
-	protected static MidiMessage createMIDINoteOffMessage(
-		int channel, int note, int velocity)
-	{
-		return createMIDINoteMessage(
-			ShortMessage.NOTE_OFF, channel, note, velocity);
-	}
-	// main message
-	protected static MidiMessage createMIDINoteMessage(
-		int command, int channel, int note, int velocity)
-	{
-		ShortMessage msg = new ShortMessage();
-		try {
-			msg.setMessage(command, channel, note, velocity);
-		}catch(InvalidMidiDataException e){
-			e.printStackTrace();
-		}
-		return msg;
-	}
-
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		// read the input and translate it to Morse
 		String fileName = "morseAlphabet.txt";
-		MorseCode.readFile(fileName);
-		MorseCode.getInput();
-		String output = MorseCode.convert();
 
-		// get input
-		int instrumentType = 1;
+		// read the file and input from user
+		Input.readFile(fileName);
+		Input.getInputText();
+		int instrumentType = Input.getInputInstrumentType();
 		int encrypt = 0;
-		int inputInstrument = 0;
-		Scanner scan = new Scanner(System.in);
-		try {
-			// ask for instrument type
-			System.out.println("Insert instrument number (1-128, for help see" 
-				+ "wikipedia.org/wiki/General_MIDI). Type 0 for random instruments" 
-				+ "(this disables the use of cryptography): ");
-			inputInstrument = scan.nextInt();   // convert input to int
-
-			// ask if user wants to use encryption
-			System.out.println("Enable Encryption? (0-No, 1-Yes): ");
-			encrypt = scan.nextInt();
-		} finally {
-			scan.close();
+		if (instrumentType != 0){
+			encrypt = Input.getInputEncryption();
 		}
-
-		// set the default note
-		int note = 60;  
-
-		// for no encryption, do simple translation
-		if (encrypt == 0) {
-			System.out.println("Morse:");
-			System.out.println(output);
-		}
+		int note = 60;  // set the default note
+		String output = MorseCode.convert();  // translate text to Morse
 
 		// for encrytpion, use simple Substitution method
 		if (encrypt == 1) {
 			String outputEncrypt = MorseCode.convertEncrypt();
 			System.out.println("Morse Encrypted:");
 			System.out.println(outputEncrypt);
+		} else {
+			System.out.println("Morse:");
+			System.out.println(output);
 		}
 
 		// play sound
@@ -83,9 +38,8 @@ public class MorseCodeTester
 			e1.printStackTrace();
 		}
 		for (int i=0; i<output.length(); i++) {
-			System.out.printf("%s\n",output.charAt(i));
 			// sets a random instrument for each letter (with no encryption)
-			if (inputInstrument == 0 && 
+			if (Input.inputInstrument == 0 && 
 				(output.charAt(i) == '/' || output.charAt(i) == ' '))
 			{
 				Random rand = new Random();
@@ -123,7 +77,7 @@ public class MorseCodeTester
 				Receiver receiver = synthesizer.getReceiver();
 
 				// start the note
-				receiver.send(createMIDINoteOnMessage(
+				receiver.send(MIDIMessages.createMIDINoteOnMessage(
 					0, note, 127), 0);
 				
 				// play longer notes on dashes
@@ -134,7 +88,7 @@ public class MorseCodeTester
 				Thread.sleep(sleep); 
 
 				// stop the note
-				receiver.send(createMIDINoteOffMessage(
+				receiver.send(MIDIMessages.createMIDINoteOffMessage(
 					0, note, 127), 0);
 
 			} catch (MidiUnavailableException | InterruptedException e) {
