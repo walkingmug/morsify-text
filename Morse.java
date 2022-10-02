@@ -17,7 +17,7 @@ public class Morse
 		if (instrumentType != 0){
 			encrypt = Input.getInputEncryption();
 		}
-		int note = 60;  // set the default note
+		int note = 60;  // set the default instrument note
 		String output = MorseCode.convert();  // translate text to Morse
 
 		// for encrytpion, use simple Substitution method

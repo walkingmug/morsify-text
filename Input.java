@@ -11,7 +11,7 @@ public class Input {
 	public static String inputText = "";
 	public static int inputInstrument = 0;
 	public static int encrypt = 0;
-	
+
 
 	// read file containing the morse code
 	public static void readFile(String fileName) throws FileNotFoundException
@@ -26,6 +26,7 @@ public class Input {
 			}
 		}
 		morseAlphabet[36] = " / ";   // word separator
+        scan.close();
 	}
 	
 	// ask for text to be converted to Morse code
@@ -54,6 +55,7 @@ public class Input {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enable Encryption? (0-No, 1-Yes): ");
 		encrypt = scan.nextInt();
+        scan.close();
 		return encrypt;
 	}
 }
