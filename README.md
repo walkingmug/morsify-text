@@ -2,7 +2,7 @@
 
 ## Description
 
-Converts text to Morse Code and plays intstrumental audio of your choice for each Morse symbol. It is possible to use Substitution method for encryption of the converted text to code.
+Converts text to Morse Code and plays instrumental audio of your choice for each Morse symbol. It is possible to use Substitution method for encryption of the converted text to code.
 
 ## Getting Started
 
