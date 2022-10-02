@@ -6,17 +6,22 @@ import java.util.Scanner;
 public class MorseCodeTester 
 {
 	// creates a message for pressing a note
-	protected static MidiMessage createMIDINoteOnMessage(int channel, int note, int velocity)
+	protected static MidiMessage createMIDINoteOnMessage(
+		int channel, int note, int velocity)
 	{
-		return createMIDINoteMessage(ShortMessage.NOTE_ON,channel,note,velocity);
+		return createMIDINoteMessage(
+			ShortMessage.NOTE_ON,channel,note,velocity);
 	}
 	// creates a message for releasing a note
-	protected static MidiMessage createMIDINoteOffMessage(int channel, int note, int velocity)
+	protected static MidiMessage createMIDINoteOffMessage(
+		int channel, int note, int velocity)
 	{
-		return createMIDINoteMessage(ShortMessage.NOTE_OFF, channel, note, velocity);
+		return createMIDINoteMessage(
+			ShortMessage.NOTE_OFF, channel, note, velocity);
 	}
 	// main message
-	protected static MidiMessage createMIDINoteMessage(int command, int channel, int note, int velocity)
+	protected static MidiMessage createMIDINoteMessage(
+		int command, int channel, int note, int velocity)
 	{
 		ShortMessage msg = new ShortMessage();
 		try {
@@ -36,7 +41,9 @@ public class MorseCodeTester
 		String output = MorseCode.convert();
 
 		// ask for instrument type
-		System.out.println("Insert instrument number (1-128, for help see wikipedia.org/wiki/General_MIDI). Type 0 for random instruments (this disables the use of cryptography): ");
+		System.out.println("Insert instrument number (1-128, for help see" 
+			+ "wikipedia.org/wiki/General_MIDI). Type 0 for random instruments" 
+			+ "(this disables the use of cryptography): ");
 		Scanner scan = new Scanner(System.in);
 		int instrumentType = scan.nextInt();   // convert input to int
 		
@@ -64,8 +71,9 @@ public class MorseCodeTester
 		// play sound
 		System.out.println("Playing sound...");
 		for (int i=0; i<output.length(); i++) {
-			// set a random instrument for each letter (when no encryption is used)
-			if (instrumentType == 0 && (output.charAt(i) == '/' || output.charAt(i) == ' '))
+			// set a random instrument for each letter (with no encryption)
+			if (instrumentType == 0 && 
+				(output.charAt(i) == '/' || output.charAt(i) == ' '))
 			{
 				Random rand = new Random();
 				instrumentType = rand.nextInt(128) + 1;
@@ -74,23 +82,36 @@ public class MorseCodeTester
 
 			// play the instrument for each morse code
 			try {
+				// initialize synthesizer to start generating sound
 				Synthesizer synthesizer = MidiSystem.getSynthesizer();
 				synthesizer.open();
-
-				final Instrument[] instruments = synthesizer.getDefaultSoundbank().getInstruments();
-
-				MidiChannel violinChannel = synthesizer.getChannels()[0];
-				violinChannel.programChange(instruments[instrumentType].getPatch().getProgram());
-
+				
+				// store the set of instruments
+				final Instrument[] instruments = 
+					synthesizer.getDefaultSoundbank().getInstruments();
+				
+				// get the set of channels
+				MidiChannel soundChannel = synthesizer.getChannels()[0];
+				soundChannel.programChange(
+					instruments[instrumentType].getPatch().getProgram());
+				
+				// get MIDI in-receiver
 				Receiver receiver = synthesizer.getReceiver();
 
-				receiver.send(createMIDINoteOnMessage(0, note, 127), 0);
+				// start the note
+				receiver.send(createMIDINoteOnMessage(
+					0, note, 127), 0);
+				
+				// play longer notes on dashes
 				int sleep = 500;
 				if (output.charAt(i) == '-'){
-					sleep = 1000;
+					sleep = 1500;
 				}
-				Thread.sleep(sleep); // set to a high number since some computers cannot play short sounds correcty
-				receiver.send(createMIDINoteOffMessage(0, note, 127), 0);
+				Thread.sleep(sleep); 
+
+				// stop the note
+				receiver.send(createMIDINoteOffMessage(
+					0, note, 127), 0);
 
 			} catch (MidiUnavailableException | InterruptedException e) {
 				e.printStackTrace();
