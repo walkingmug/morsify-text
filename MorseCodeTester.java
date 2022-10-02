@@ -45,8 +45,9 @@ public class MorseCodeTester
 			+ "wikipedia.org/wiki/General_MIDI). Type 0 for random instruments" 
 			+ "(this disables the use of cryptography): ");
 		Scanner scan = new Scanner(System.in);
-		int instrumentType = scan.nextInt();   // convert input to int
-		
+		int inputInstrument = scan.nextInt();   // convert input to int
+		int instrumentType = 0;
+
 		// set the default note for all instruments
 		int note = 60;  
 
@@ -70,9 +71,12 @@ public class MorseCodeTester
 
 		// play sound
 		System.out.println("Playing sound...");
+		System.out.println(output.split(" "));
 		for (int i=0; i<output.length(); i++) {
+			System.out.printf("Playing: \"%s\"\n", output.charAt(i));
 			// set a random instrument for each letter (with no encryption)
-			if (instrumentType == 0 && 
+			System.out.println(instrumentType);
+			if (inputInstrument == 0 && 
 				(output.charAt(i) == '/' || output.charAt(i) == ' '))
 			{
 				Random rand = new Random();
