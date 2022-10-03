@@ -1,5 +1,7 @@
+package src.main;
 import java.io.FileNotFoundException;
 import javax.sound.midi.*;
+
 import java.util.Random;
 
 
