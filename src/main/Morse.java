@@ -9,22 +9,22 @@ public class Morse
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		String fileName = "morseAlphabet.txt";
+		String fileName = "src/main/morseAlphabet.txt";
 
 		// read the file and input from user
 		Input.readFile(fileName);
-		Input.getInputText();
+		String inputText = Input.getInputText();
 		int instrumentType = Input.getInputInstrumentType();
 		int encrypt = 0;
 		if (instrumentType != 0){
 			encrypt = Input.getInputEncryption();
 		}
 		int note = 60;  // set the default instrument note
-		String output = MorseCode.convert();  // translate text to Morse
+		String output = MorseCode.convert(inputText);  // translate text to Morse
 
 		// for encrytpion, use simple Substitution method
 		if (encrypt == 1) {
-			String outputEncrypt = MorseCode.convertEncrypt();
+			String outputEncrypt = MorseCode.convertEncrypt(inputText);
 			System.out.println("Morse Encrypted:");
 			System.out.println(outputEncrypt);
 		} else {

@@ -4,16 +4,17 @@ import java.util.Random;
 
 public class MorseCode
 {
-	public static String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
+	// public static String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
 	
 	// convert text into Morse code (without encrytion)
-	public static String convert()
+	public static String convert(String inputText)
 	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
 		String output = "";
-		for(int i = 0; i < Input.inputText.length(); i++) {
+		for(int i = 0; i < inputText.length(); i++) {
 			// get the typed character and find its index in the alphabet
 			// the index tells will be matched with the same Morse code index
-			char charAtIndex = Input.inputText.charAt(i);
+			char charAtIndex = inputText.charAt(i);
 			int indexInAlphabet = alphabet.indexOf(charAtIndex);
 			output += Input.morseAlphabet[indexInAlphabet] + " ";
 		}
@@ -21,17 +22,18 @@ public class MorseCode
 	}
 
 	// convert text into Morse code (with encrytion)
-	public static String convertEncrypt()
+	public static String convertEncrypt(String inputText)
 	{
+		String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
 		String output = "";
-		for(int i=0; i<Input.inputText.length(); i++) {
+		for(int i=0; i<inputText.length(); i++) {
 			// shift using Substitution encryption
 			Random rand = new Random();
 			int shift = rand.nextInt(36);
 
 			// get the typed character and find its index in the alphabet
 			// the index tells will be matched with the same Morse code index
-			char charAtIndex = Input.inputText.charAt(i);
+			char charAtIndex = inputText.charAt(i);
 			int indexInAlphabet = alphabet.indexOf(charAtIndex);
 			int shifted = indexInAlphabet + shift;
 

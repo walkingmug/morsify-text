@@ -9,7 +9,6 @@ public class Input {
     Random rand = new Random();
 
     public static String[] morseAlphabet = new String[37];
-	public static String inputText = "";
 	public static int inputInstrument = 0;
 	public static int encrypt = 0;
 
@@ -31,12 +30,12 @@ public class Input {
 	}
 	
 	// ask for text to be converted to Morse code
-	public static void getInputText()
+	public static String getInputText()
 	{
 		Scanner scan = new Scanner(System.in);
 		// ask for text to be converted
 		System.out.println("Type some text (a-z, 0-9 and spaces): ");
-		inputText = scan.nextLine().toLowerCase();
+		return scan.nextLine().toLowerCase();
 	}
 
     // ask for instrument type

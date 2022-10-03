@@ -1,10 +1,22 @@
 package src.test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 
-class MorseCodeTest {
+import src.main.Input;
+import src.main.MorseCode;
+
+public class MorseCodeTest {
     @Test
-    void testconvert(){
-        
+    public void testconvert() throws FileNotFoundException{
+        MorseCode m = new MorseCode();
+        Input.readFile("C:/Vullnet/Side Projects/Morsify text/src/main/morseAlphabet.txt");
+
+        String result = m.convert("hello world 09");
+        String expectedResult = ".... . .-.. .-.. ---  /  .-- --- .-. .-.. -..  /  ----- ----. ";
+        assertEquals(expectedResult, result);
     }
 }
