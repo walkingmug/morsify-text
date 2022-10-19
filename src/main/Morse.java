@@ -24,7 +24,8 @@ public class Morse
 
 		// for encrytpion, use simple Substitution method
 		if (encrypt == 1) {
-			String outputEncrypt = MorseCode.convertEncrypt(inputText);
+			String outputEncrypt = 
+				MorseCode.convertEncrypt(inputText, true);
 			System.out.println("Morse Encrypted:");
 			System.out.println(outputEncrypt);
 		} else {

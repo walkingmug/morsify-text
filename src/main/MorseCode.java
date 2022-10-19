@@ -11,7 +11,7 @@ public class MorseCode
 	{
 		String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
 		String output = "";
-		for(int i = 0; i < inputText.length(); i++) {
+		for (int i = 0; i < inputText.length(); i++) {
 			// get the typed character and find its index in the alphabet
 			// the index tells will be matched with the same Morse code index
 			char charAtIndex = inputText.charAt(i);
@@ -22,14 +22,17 @@ public class MorseCode
 	}
 
 	// convert text into Morse code (with encrytion)
-	public static String convertEncrypt(String inputText)
+	public static String convertEncrypt(String inputText, boolean enableEncrypt)
 	{
 		String alphabet = "abcdefghijklmnopqrstuvwxyz1234567890 ";
 		String output = "";
-		for(int i=0; i<inputText.length(); i++) {
+		for (int i=0; i<inputText.length(); i++) {
 			// shift using Substitution encryption
-			Random rand = new Random();
-			int shift = rand.nextInt(36);
+			int shift = 1;
+			if (enableEncrypt == true){
+				Random rand = new Random();
+				shift = rand.nextInt(36);
+			}
 
 			// get the typed character and find its index in the alphabet
 			// the index tells will be matched with the same Morse code index
@@ -39,7 +42,7 @@ public class MorseCode
 
 			// if the shift goes outside the alphabet range, bring it to the start
 			if (shifted > 36) {
-				shifted = shifted - 36;
+				shifted -= 36;
 			}
 			output += Input.morseAlphabet[shifted] + " ";
 		}
