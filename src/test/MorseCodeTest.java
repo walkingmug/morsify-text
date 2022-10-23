@@ -14,7 +14,7 @@ public class MorseCodeTest {
     @Test
     public void testconvert() throws FileNotFoundException{
         MorseCode m = new MorseCode();
-        Input.readFile("C:/Vullnet/Side Projects/Morsify text/src/main/morseAlphabet.txt");
+        Input.readFile("src/main/morseAlphabet.txt");
 
         String result = m.convert("hello world 09");
         String expectedResult = ".... . .-.. .-.. ---  /  .-- --- .-. .-.. -..  /  ----- ----. ";
