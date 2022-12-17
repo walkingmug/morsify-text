@@ -89,10 +89,6 @@ if (output.charAt(i) == '-'){
 * See list of MIDI instrument types and their codes here: https://en.wikipedia.org/wiki/General_MIDI#Parameter_interpretations
 * See list of MIDI instrument notes and their codes here: https://en.scratch-wiki.info/wiki/MIDI_Notes
 
-## Authors
-
-Vulnet Alija 
-
 ## Version History
 * 0.1
     * Initial Release
